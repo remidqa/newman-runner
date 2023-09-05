@@ -12,15 +12,15 @@ fastify.get('/report', async (req, rep) => {
     return getReport(reportName)
 })
 
+fastify.delete('/report', async (req, rep) => {
+    let reportName = req.query.report_name
+    return deleteReport(reportName)
+})
+
 fastify.post('/run/coll_id/:coll_id', async (req, rep) => {
     let coll_id = req.params.coll_id
     let env_id = req.query.env_id ? req.query.env_id : null
     return await runNewman(coll_id, env_id);
-})
-
-fastify.delete('/report', async (req, rep) => {
-    let reportName = req.query.report_name
-    return deleteReport(reportName)
 })
 
 // Run the server!
