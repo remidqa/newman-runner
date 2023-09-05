@@ -1,5 +1,8 @@
 FROM node:20
 
+#ENV POSTMAN_API_KEY=
+#ENV API_QA_INT_URL=
+
 RUN apt-get update -y
 
 WORKDIR /app
