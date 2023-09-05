@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "glob": "^10.3.4",
     "newman": "^5.3.2",
     "newman-reporter-json-summary": "^1.0.14"
   }

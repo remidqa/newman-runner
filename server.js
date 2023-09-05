@@ -1,13 +1,26 @@
 const fastify = require('fastify')({ logger: true })
 const { runNewman } = require("./functions/newman.js")
-const { sendResultsToApiQa } = require("./functions/reports.js")
+const { getReports, getReport, deleteReport} = require("./functions/reports.js")
+
+fastify.get('/reports/coll_id/:coll_id', async (req, rep) => {
+    let collId = req.params.coll_id
+    return getReports(collId)
+})
+
+fastify.get('/report', async (req, rep) => {
+    let reportName = req.query.report_name
+    return getReport(reportName)
+})
 
 fastify.post('/run/coll_id/:coll_id', async (req, rep) => {
     let coll_id = req.params.coll_id
     let env_id = req.query.env_id ? req.query.env_id : null
-    let newmanResults = await runNewman(coll_id, env_id);
-    let postedResults = await sendResultsToApiQa(newmanResults)
-    return postedResults
+    return await runNewman(coll_id, env_id);
+})
+
+fastify.delete('/report', async (req, rep) => {
+    let reportName = req.query.report_name
+    return deleteReport(reportName)
 })
 
 // Run the server!
