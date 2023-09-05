@@ -5,12 +5,16 @@ const fs = require("fs")
 const postmanApiUrl = "https://api.postman.com"
 const postmanApiKey = process.env.POSTMAN_API_KEY
 
+function addApiKey(key){
+    return key ? `apikey=${key}` : ""
+}
+
 module.exports = {
     runNewman: async (coll_id, env_id) => {
-        coll_url = `${postmanApiUrl}/collections/${coll_id}?apikey=${postmanApiKey}`
-        env_url = `${postmanApiUrl}/environments/${env_id}?apikey=${postmanApiKey}`
-        report_output = `reports/${coll_id}_${env_id}_${Date.now()}.json`
-        cmd = `newman run ${coll_url} -e ${env_url} -r json-summary,cli --reporter-summary-json-export ${report_output}`
+        let coll_url = `${postmanApiUrl}/collections/${coll_id}?${addApiKey(postmanApiKey)}`
+        let env_url = env_id !== null ? `${postmanApiUrl}/environments/${env_id}?${addApiKey(postmanApiKey)}` : ""
+        let report_output = `reports/${coll_id}_${env_id ? env_id : ""}_${Date.now()}.json`
+        cmd = `newman run ${coll_url} ${env_id !== null ? '-e '+env_url : ''} -r json-summary,cli --reporter-summary-json-export ${report_output}`
         return new Promise(async (res, rej) => {
             exec(cmd, (err, stdout, stderr) => {
                 fs.readFile(report_output, "utf-8", (err, data) => {

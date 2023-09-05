@@ -2,9 +2,9 @@ const fastify = require('fastify')({ logger: true })
 const { runNewman } = require("./functions/newman.js")
 const { sendResultsToApiQa } = require("./functions/reports.js")
 
-fastify.post('/run/coll_id/:coll_id/env_id/:env_id', async (req, rep) => {
+fastify.post('/run/coll_id/:coll_id', async (req, rep) => {
     let coll_id = req.params.coll_id
-    let env_id = req.params.env_id
+    let env_id = req.query.env_id ? req.query.env_id : null
     let newmanResults = await runNewman(coll_id, env_id);
     let postedResults = await sendResultsToApiQa(newmanResults)
     return postedResults
