@@ -24,6 +24,12 @@ first set up some variables (either in a ```.env``` or ```Dockerfile``` file):
     - expected params
         - ```coll_id```: [MANDATORY] postman collection id
 
+- ```[POST] /run/coll_id/:coll_id```
+    - expected params:
+        - ```coll_id```: [MANDATORY] postman collection id
+    - expected query:
+        - ```env_id```: [OPTIONAL] postman environment id
+
 - ```[GET] /report```
     - expected query inputs
         - ```coll_id```: [MANDATORY] postman collection id
@@ -31,9 +37,3 @@ first set up some variables (either in a ```.env``` or ```Dockerfile``` file):
 - ```[DELETE] /report```
     - expected query inputs:
         - ```report_name```: name of the report to delete.
-
-- ```[POST] /run/coll_id/:coll_id```
-    - expected params:
-        - ```coll_id```: [MANDATORY] postman collection id
-    - expected query:
-        - ```env_id```: [OPTIONAL] postman environment id
