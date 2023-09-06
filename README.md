@@ -7,7 +7,7 @@
 
 ## What is this application for
 A simple application to run newman executions
-A server listen to ```/run/coll_id/:coll_id/env_id/:env_id'``` route and send results to another API (an API capable of managing executions, reports, execution history, alerts,... )
+A server listen to 2 ```GET```, 1 ```POST``` and 1 ```DELETE``` route to manage execution reports
 
 ## Setup
 The easiest way to run the API is to build a Docker container and run it
