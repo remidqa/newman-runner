@@ -17,10 +17,12 @@ fastify.delete('/report', async (req, rep) => {
     return deleteReport(reportName)
 })
 
-fastify.post('/run/coll_id/:coll_id', async (req, rep) => {
-    let coll_id = req.params.coll_id
-    let env_id = req.query.env_id ? req.query.env_id : null
-    return await runNewman(coll_id, env_id);
+fastify.post('/run', async (req, rep) => {
+    console.log(req.body)
+    let coll_id = req.body.coll_id
+    let env_id = req.body.env_id
+    let folder = req.body.folder
+    return await runNewman(coll_id, env_id, folder);
 })
 
 // Run the server!
