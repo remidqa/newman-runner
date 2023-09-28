@@ -7,12 +7,10 @@ RUN apt-get update -y
 
 WORKDIR /app
 
-RUN npm install -g newman
-
 COPY . .
 
-RUN npm install fastify dotenv glob
-RUN npm install -g newman-reporter-json-summary
+RUN npm install
+RUN npm install -g newman newman-reporter-json-summary
 
 CMD ["node","server.js"]
 
