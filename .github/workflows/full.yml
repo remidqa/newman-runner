@@ -6,15 +6,11 @@ on:
     branches:
       - main
 
-env:
-  APP: newman-runner
-  ENV: preview
-
 jobs:
   full:
     uses: remidqa/qa-configurations/.github/workflows/build-deploy-test.yml@main
     with:
-      APP: api-qa
+      APP: newman-runner
       ENV: preview
     secrets:
       DOCKER_USER: ${{ secrets.DOCKER_USER }}
