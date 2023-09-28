@@ -1,39 +1,27 @@
-# README
+# NEWMAN-RUNNER
 
-## Used Technologies
+This application is a Newman tests runner wrapped in an API. It can be used to trigger tests and and manage reports
+
+## Technologies
 - Newman
 - Nodejs
+- fastify
 - Docker
-
-## What is this application for
-A simple application to run newman executions
-A server listen to 2 ```GET```, 1 ```POST``` and 1 ```DELETE``` route to manage execution reports
-
-## Setup
-The easiest way to run the API is to build a Docker container and run it
-first set up some variables (either in a ```.env``` or ```Dockerfile``` file): 
-- ```POSTMAN_API_KEY``` : required if your collections and/or env files are private
-- ```API_QA_INT_URL``` : where we want to send the ```.json``` reports to
+- remidqa quality workflow
 
 ## Build
-- ```docker build -t newman-runner```
-- ```docker run newman-runner```
+- This application is designed for a Docker usage.
+- To build simple run : ```docker build -t {tag-name} .```
+- Then the image will be available on your local repository
 
-## Routes
-- ```[GET] /reports/coll_id/:coll_id```
-    - expected params
-        - ```coll_id```: [MANDATORY] postman collection id
-
-- ```[POST] /run/coll_id/:coll_id```
-    - expected params:
-        - ```coll_id```: [MANDATORY] postman collection id
-    - expected query:
-        - ```env_id```: [OPTIONAL] postman environment id
-
-- ```[GET] /report```
-    - expected query inputs
-        - ```coll_id```: [MANDATORY] postman collection id
-
-- ```[DELETE] /report```
-    - expected query inputs:
-        - ```report_name```: name of the report to delete.
+## Configuration
+- All psotman files (environment and collections) are fetched on execution request : set env variable ```POSTMAN_API_KEY```
+- This application execute collections tests sub-folders as tests, you must design your collection for this usage
+- 
+  ## Usage
+- ```[POST] /run``` with 2 mandatory variables (```coll_id```, ```env_id``` and ```fodler```) in the body : ```{"coll_id": "${coll_id}", "env_id": "${env_id}", "folder": "${folder}"}```
+    - ```coll_id```: Postman ID of the collection you need to execute, your ```POSTMAN_API_KEY``` must have acces to this collection
+    - ```env_id```: Postman ID of the environment you need to execute, your ```POSTMAN_API_KEY``` must have acces to this environment
+    - ```folder```: is, in the collection, the name of the sub-folder to execute
+    - RESPONSE : you will get the report's name in the body response
+- ```[GET] /report?report_name=${report_name}``` : to get the .json report
